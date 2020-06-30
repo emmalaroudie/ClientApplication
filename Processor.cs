@@ -17,6 +17,7 @@ namespace ClientApplication
         public Communicator communicator;
         private Message messageRequest;
         private List<string> listData;
+        private Dictionary<string,string> listDataBis;
 
         //private ResponseRequester requester;
         private Dictionary<string, string> dico = new Dictionary<string, string>();
@@ -107,6 +108,9 @@ namespace ClientApplication
         {
             if ((Login != null) && (Password != null))
             {
+
+
+
                 listData.Add(Login);
                 listData.Add(Password);
                 messageRequest.data = listData.ToArray();
@@ -129,7 +133,7 @@ namespace ClientApplication
         {
             try
             {
-
+                listDataBis = new Dictionary<string, string>();
 
                 DirectoryInfo dir = new DirectoryInfo(Path);
               
@@ -137,11 +141,19 @@ namespace ClientApplication
                 {
                     if (!file.Attributes.HasFlag(FileAttributes.Hidden))
                     {
-                        listData.Add(file.Name + "\n" + File.ReadAllText(file.FullName));
+                        listDataBis.Add(file.Name, File.ReadAllText(file.FullName));
+                        //listData.Add(file);
+                        //listData.Add(file.Name + "\n" + File.ReadAllText(file.FullName));
                     }
                    
                 }
-                messageRequest.data =listData.ToArray();
+
+
+                string[] test = new string[listDataBis.Count];
+
+                listDataBis.Values.CopyTo(test, 0);
+
+                messageRequest.data = test;
 
                 // test du contenu de l'object data []
                 // foreach(string str in messageRequest.data){MessageBox.Show(str);}
