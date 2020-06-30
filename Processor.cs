@@ -20,7 +20,6 @@ namespace ClientApplication
 
         //private ResponseRequester requester;
         private Dictionary<string, string> dico = new Dictionary<string, string>();
-        //private string _statusConnection;
         public string Path { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
@@ -32,8 +31,6 @@ namespace ClientApplication
         public string StateConnection
         {
             get; set;
-            //get { return _statusConnection; }
-            //set {_statusConnection = value;RaisePropertyChanged("StateConnection");}
         }
         public Processor()
         {
