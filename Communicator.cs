@@ -85,7 +85,8 @@ namespace ClientApplication
             {
                 message.tokenApp = tokenApp;
                 message.tokenUser = tokenUser;
-                message = messageService.Servicing(message);
+                Thread threadDecipher = new Thread(() => { message = messageService.Servicing(message); });
+                threadDecipher.Start();
                 MessageBox.Show("Demande de déchiffrement des fichiers effectuée");
             }
         }

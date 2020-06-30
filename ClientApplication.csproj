@@ -99,7 +99,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="E:\DotNETServer\Contract\Contract.csproj">
+    <ProjectReference Include="Contract\Contract.csproj">
       <Project>{8ad8fa5e-59d9-4c95-85a2-fd8fc34f5876}</Project>
       <Name>Contract</Name>
     </ProjectReference>
