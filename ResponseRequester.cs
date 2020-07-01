@@ -14,27 +14,14 @@ namespace ClientApplication
         public Communicator communicator;
         private Message messageCheckRequest;
         private bool isPositiveResponseReceived = false;
-        //public Processor processor;
 
-        public ResponseRequester(Communicator com)
+        public ResponseRequester()
         {
             communicator = new Communicator();
-            communicator = com;
-
             messageCheckRequest = new Message();
-            //communicator = new Communicator();
-            //blbbla();
-
-
         }
 
-        public async void CheckResult()
-        {
-            await Task.Run(() => RequestResult());
-        }
-
-        private async void RequestResult()
-        //public void RequestResult()
+        public void RequestResult()
         {
             while (!isPositiveResponseReceived)
             {
@@ -60,6 +47,9 @@ namespace ClientApplication
                 }
             }
             MessageBox.Show(messageCheckRequest.operationName + " & " + messageCheckRequest.statusOp);
+
+            // Ici renvoyer les fichiers déchiffrés ?
+            // au moins un message avec l'info secrète.
         }
     }
 }

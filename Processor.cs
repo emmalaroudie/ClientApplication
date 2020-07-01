@@ -13,14 +13,11 @@ namespace ClientApplication
 {
     public class Processor : INotifyPropertyChanged
     {
-
         public Communicator communicator;
         private Message messageRequest;
         private List<string> listData;
-        private Dictionary<string,string> listDataBis;
 
-        //private ResponseRequester requester;
-        private Dictionary<string, string> dico = new Dictionary<string, string>();
+        private ResponseRequester requester;
         public string Path { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
@@ -39,7 +36,7 @@ namespace ClientApplication
             messageRequest = new Message();
             communicator = new Communicator();
             listData = new List<string>();
-
+            requester = new ResponseRequester();
             Thread t = new Thread(() => { CheckStateConnection(); });
             t.Start();
         }
@@ -75,15 +72,16 @@ namespace ClientApplication
 
             if (opName == "decipher")
             {
-                //if (Path != null){
-                    Path = "E:\\FICHIERS";
+                if (Path != null){
                     GetFilesToDecipher();
                     communicator.message = messageRequest;
                     if (communicator.message.data != null)
                         communicator.Decipher();
                     else
                         MessageBox.Show("Une erreure s'est produite veuillez réessayer.");
-                //}else MessageBox.Show("Veuillez entrer un chemin valide.");
+                }
+                else 
+                    MessageBox.Show("Veuillez entrer un chemin valide.");
             }
             else if (opName == "authentificate")
             {
@@ -93,24 +91,20 @@ namespace ClientApplication
                 if (communicator.message.data != null)
                 {
                     communicator.Authentification();
-                    //requester = new ResponseRequester(communicator);
-                    //requester.CheckResult();
+                    requester.communicator = communicator;
+
+                    Thread threadRequestResult = new Thread(() => { requester.RequestResult(); });
+                    threadRequestResult.Start();
+                    
                 }
-
-
-
             }
         }
 
-        // Récupération du login et du mot de passe pour
-        // les ajouter à l'array de données du message
+        // Récupération du login et du mot de passe pour les ajouter à l'array de données du message
         private void GetLoginInfos()
         {
             if ((Login != null) && (Password != null))
             {
-
-
-
                 listData.Add(Login);
                 listData.Add(Password);
                 messageRequest.data = listData.ToArray();
@@ -125,41 +119,26 @@ namespace ClientApplication
         }
 
 
-        // Récupération des fichiers à déchiffrer,
-        // stockage du texte des fichiers dans une liste de string
-        // conversion de la liste de string en array de string 
-        // pour correspondre à l'array de Message object Data[]
+        // Récupération des fichiers à déchiffrer, stockage du texte des fichiers dans une liste de string,
+        // conversion de la liste de string en array de string pour correspondre à l'array de Message object Data[]
         private void GetFilesToDecipher()
         {
             try
             {
-                listDataBis = new Dictionary<string, string>();
-
-                DirectoryInfo dir = new DirectoryInfo(Path);
-              
+                DirectoryInfo dir = new DirectoryInfo(Path);              
                 foreach (FileInfo file in dir.GetFiles("*.txt"))
                 {
                     if (!file.Attributes.HasFlag(FileAttributes.Hidden))
                     {
-                        listDataBis.Add(file.Name, File.ReadAllText(file.FullName));
-                        //listData.Add(file);
-                        //listData.Add(file.Name + "\n" + File.ReadAllText(file.FullName));
+                        //On ajoute le nom du fichier (indice % 2 = 0)
+                        listData.Add(file.Name);
+                        //On ajoute le contenu du fichier (indice % 2 = 1)
+                        listData.Add(File.ReadAllText(file.FullName));
                     }
-                   
                 }
 
-
-                string[] test = new string[listDataBis.Count];
-
-                listDataBis.Values.CopyTo(test, 0);
-
-                messageRequest.data = test;
-
-                // test du contenu de l'object data []
-                // foreach(string str in messageRequest.data){MessageBox.Show(str);}
-                //dico.Add(file.Name, File.ReadAllText(file.FullName));
-                //count++;
-
+                // on ajoute le contenu de la liste à l'object[] data du message
+                messageRequest.data = listData.ToArray();
                 listData.Clear();
             }
             catch (FileNotFoundException e)

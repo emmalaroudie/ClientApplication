@@ -13,7 +13,6 @@ namespace ClientApplication
     public class Communicator
     {
 
-        private EndpointAddress endpointAdress = new EndpointAddress("net.tcp://localhost:8018/Job/MessageService");
         private IMessageService messageService;
         public Message message;
 
@@ -28,15 +27,13 @@ namespace ClientApplication
 
         private void ConnectionToServeur()
         {
-            channelFactory = new ChannelFactory<Contract.IMessageService>("MaConfigurationClient");//*/new NetTcpBinding(), endpointAdress);
+            channelFactory = new ChannelFactory<Contract.IMessageService>("MaConfigurationClient");
             messageService = channelFactory.CreateChannel();
-
-            
         }
 
         private void WaitAndClose()
         {
-            Thread.Sleep(600000*2);
+            Thread.Sleep(600000);
             CloseConnectionToServer();
             MessageBox.Show("Votre session a expiré. Veuillez vous reconnecter");
         }
@@ -53,7 +50,6 @@ namespace ClientApplication
 
         public void Authentification()
         {
-            //MessageBox.Show("Classe Communicator, méthode authentification");
             if (channelFactory == null || channelFactory.State == CommunicationState.Closed)
             {
                 ConnectionToServeur();
@@ -63,9 +59,9 @@ namespace ClientApplication
             if(message.tokenUser != null)
             {
                 tokenUser = message.tokenUser;
-                //MessageBox.Show("Connection réussie. Client : token user = " + tokenUser);
-                Thread threadStop = new Thread(() => { WaitAndClose(); });
-                threadStop.Start();
+                MessageBox.Show("Connection réussie. Client : token user = " + tokenUser);
+                //Thread threadStop = new Thread(() => { WaitAndClose(); });
+                //threadStop.Start();
             }
             else
             {
@@ -85,8 +81,10 @@ namespace ClientApplication
             {
                 message.tokenApp = tokenApp;
                 message.tokenUser = tokenUser;
-
-                Thread threadDecipher = new Thread(() => { message = messageService.Servicing(message); });
+                Thread threadDecipher = new Thread(() =>
+                { 
+                    message = messageService.Servicing(message); 
+                });
                 threadDecipher.Start();
                 MessageBox.Show("Demande de déchiffrement des fichiers effectuée");
             }

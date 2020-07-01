@@ -17,29 +17,13 @@ namespace DotNETServer
         private ServiceHost host;
         public void ServiceStart()
         {
-            //baseAddress = new Uri("net.tcp://localhost:8018/Job/MessageService");
-            //host = new ServiceHost(typeof(MessageService));
-            //try
-            //{
-            //    host.AddServiceEndpoint(typeof(IMessageService), new NetTcpBinding(), baseAddress);
-            //    host.Open();
-
-            //    Console.WriteLine("Serveur started");
-            //    Console.WriteLine("Press enter to stop the app");
-
-            //    Console.ReadLine();
-            //    host.Close();
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine($"Exception rencontrée : {ex.Message}");
-            //}
-
 
             baseAddress = new Uri("net.tcp://localhost:8018/Job/MessageService");
             NetTcpBinding binding = new NetTcpBinding();
             binding.Security.Mode = SecurityMode.Message;
             binding.MaxReceivedMessageSize= 2147483647;
+            binding.CloseTimeout = TimeSpan.MaxValue;
+            binding.ReceiveTimeout = TimeSpan.MaxValue;
 
             XmlDictionaryReaderQuotas myReaderQuotas = new XmlDictionaryReaderQuotas();
             myReaderQuotas.MaxStringContentLength = 2147483647;

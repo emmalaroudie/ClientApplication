@@ -17,7 +17,7 @@ namespace Job
 
         public Message Servicing(Message msg)
         {
-            Console.WriteLine($"Demande entrante : {msg.info}");
+            Console.WriteLine($"Demande entrante : {msg.operationName}");
             switch (msg.operationName)
             {
                 case "authentificate":
