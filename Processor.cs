@@ -16,20 +16,17 @@ namespace ClientApplication
         public Communicator communicator;
         private Message messageRequest;
         private List<string> listData;
-
         private ResponseRequester requester;
+
         public string Path { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
-
+        public string StateConnection { get; set; }
         public bool ConnectionBtnIsEnabled { get; set; }
         public bool DecipherBtnIsEnabled { get; set; }
         
         public event PropertyChangedEventHandler PropertyChanged;
-        public string StateConnection
-        {
-            get; set;
-        }
+        
         public Processor()
         {
 

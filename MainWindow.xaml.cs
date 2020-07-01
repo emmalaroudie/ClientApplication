@@ -22,7 +22,6 @@ namespace ClientApplication
     public partial class MainWindow : Window
     {
         private Processor processor = new Processor();
-        //private ResponseRequester requester;
 
         public MainWindow()
         {

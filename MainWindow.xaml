@@ -11,15 +11,15 @@
         <Label Content="Login" HorizontalAlignment="Left" Margin="50,61,0,0" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="160,65,0,0" TextWrapping="Wrap" Text="{Binding Login, Mode=TwoWay}" VerticalAlignment="Top" Width="120"/>
 
-        <Label Content="Mot de passe" HorizontalAlignment="Left" Margin="50,92,0,0" VerticalAlignment="Top"/>
+        <Label Content="Password" HorizontalAlignment="Left" Margin="50,92,0,0" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="160,96,0,0" TextWrapping="Wrap" Text="{Binding Password, Mode=TwoWay}" VerticalAlignment="Top" Width="120"/>
 
         <Button Content="Connexion" Click="Connexion_Click" IsEnabled="{Binding ConnectionBtnIsEnabled, Mode=TwoWay}"  HorizontalAlignment="Left" Margin="338,98,0,0" VerticalAlignment="Top" Width="75" Height="21"/>
 
-        <Label Content="Status de la connection avec le serveur :" HorizontalAlignment="Left" Margin="50,148,0,0" VerticalAlignment="Top"/>
-        <Label Content="{Binding StateConnection, Mode=TwoWay}" HorizontalAlignment="Left" Margin="295,148,0,0" VerticalAlignment="Top" Height="53" Width="209"/>
+        <Label Content="State of the connection with the server :" HorizontalAlignment="Left" Margin="50,148,0,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding StateConnection, Mode=TwoWay}" HorizontalAlignment="Left" Margin="275,148,0,0" VerticalAlignment="Top" Height="53" Width="209"/>
 
-        <Label Content="Entrer le chemin vers le dossier contenant les fichiers à déchiffrer :" HorizontalAlignment="Left" Margin="50,206,0,0" VerticalAlignment="Top"/>
+        <Label Content="Enter path to the folder containing the files to decipher :" HorizontalAlignment="Left" Margin="50,206,0,0" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="50,237,0,0" TextWrapping="Wrap" Text="{Binding Path, Mode=TwoWay}" VerticalAlignment="Top" Width="409"/>
         <Button Content="Déchiffrer" Click="Decipher_Click" IsEnabled="{Binding DecipherBtnIsEnabled, Mode=TwoWay}" HorizontalAlignment="Left" Margin="470,237,0,0" VerticalAlignment="Top" Width="75"/>
         
