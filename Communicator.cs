@@ -44,6 +44,7 @@ namespace ClientApplication
             {
                 channelFactory.Close();
             }
+            channelFactory = null;
             tokenUser = null;
         }
 
@@ -60,8 +61,8 @@ namespace ClientApplication
             {
                 tokenUser = message.tokenUser;
                 MessageBox.Show("Connection réussie. Client : token user = " + tokenUser);
-                //Thread threadStop = new Thread(() => { WaitAndClose(); });
-                //threadStop.Start();
+                Thread threadStop = new Thread(() => { WaitAndClose(); });
+                threadStop.Start();
             }
             else
             {

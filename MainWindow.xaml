@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ClientApplication"
         mc:Ignorable="d"
-        Title="Application Client .net" Height="450" Width="800">
-    <Grid>
+        Title="Application Client .net" Height="386.975" Width="602.101">
+    <Grid Margin="0,0,2,0">
 
         <Label Content="Login" HorizontalAlignment="Left" Margin="50,61,0,0" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="160,65,0,0" TextWrapping="Wrap" Text="{Binding Login, Mode=TwoWay}" VerticalAlignment="Top" Width="120"/>
@@ -21,9 +21,11 @@
 
         <Label Content="Enter path to the folder containing the files to decipher :" HorizontalAlignment="Left" Margin="50,206,0,0" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="50,237,0,0" TextWrapping="Wrap" Text="{Binding Path, Mode=TwoWay}" VerticalAlignment="Top" Width="409"/>
-        <Button Content="Déchiffrer" Click="Decipher_Click" IsEnabled="{Binding DecipherBtnIsEnabled, Mode=TwoWay}" HorizontalAlignment="Left" Margin="470,237,0,0" VerticalAlignment="Top" Width="75"/>
-        
+        <Button Content="Decipher" Click="Decipher_Click" IsEnabled="{Binding DecipherBtnIsEnabled, Mode=TwoWay}" HorizontalAlignment="Left" Margin="470,237,0,0" VerticalAlignment="Top" Width="75"/>
 
+        <Label Content="State of the request :" HorizontalAlignment="Left" Margin="50,300,0,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding requester.StateRequest, Mode=TwoWay}" HorizontalAlignment="Left" Margin="175,300,0,0" VerticalAlignment="Top" Height="26" Width="95"/>
+        <Button Content="Download" Click="Download_click" IsEnabled="{Binding requester.IsRequestFinished, Mode=TwoWay}" HorizontalAlignment="Left" Margin="275,303,0,0" VerticalAlignment="Top" Width="75"/>
 
 
     </Grid>

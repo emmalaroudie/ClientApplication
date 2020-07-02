@@ -16,7 +16,7 @@ namespace ClientApplication
         public Communicator communicator;
         private Message messageRequest;
         private List<string> listData;
-        private ResponseRequester requester;
+        public ResponseRequester requester { get; } = new ResponseRequester();
 
         public string Path { get; set; }
         public string Login { get; set; }
@@ -33,7 +33,7 @@ namespace ClientApplication
             messageRequest = new Message();
             communicator = new Communicator();
             listData = new List<string>();
-            requester = new ResponseRequester();
+
             Thread t = new Thread(() => { CheckStateConnection(); });
             t.Start();
         }
@@ -48,9 +48,6 @@ namespace ClientApplication
                     StateConnection = communicator.channelFactory.State.ToString();
                     DecipherBtnIsEnabled = true;
                     ConnectionBtnIsEnabled = false;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("StateConnection"));
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("DecipherBtnIsEnabled"));
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ConnectionBtnIsEnabled"));
                 }
                 else
                 {
@@ -58,6 +55,9 @@ namespace ClientApplication
                     DecipherBtnIsEnabled = false;
                     ConnectionBtnIsEnabled = true;
                 }
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("StateConnection"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("DecipherBtnIsEnabled"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ConnectionBtnIsEnabled"));
                 Thread.Sleep(1000);
             }
         }

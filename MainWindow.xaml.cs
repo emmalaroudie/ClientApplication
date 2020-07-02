@@ -42,5 +42,10 @@ namespace ClientApplication
             thread2.Start();
         }
 
+        private void Download_click(object sender, RoutedEventArgs e)
+        {
+            processor.requester.Download();
+        }
+
     }
 }
