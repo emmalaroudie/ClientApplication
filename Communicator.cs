@@ -7,6 +7,7 @@ using System.ServiceModel;
 using System.Windows;
 using Contract;
 using System.Threading;
+using System.Windows.Media.TextFormatting;
 
 namespace ClientApplication
 {

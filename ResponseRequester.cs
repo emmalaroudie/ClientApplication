@@ -36,25 +36,16 @@ namespace ClientApplication
             string path = "C:\\Desktop\\DecipheredFiles\\";
             MessageBox.Show("Starting Download : Your files will be available in : " + path);
 
-            // séparer le contenu des de leurs noms dans 2 listes différentes
-            List<string> listNames = new List<string>();
-            List<string> listFiles = new List<string>();
-            for (int index = 0; index < messageCheckRequest.data.Length; index++)
-            {
-                if (index % 2 == 0)
-                    listNames.Add(messageCheckRequest.data[index].ToString());
-                else
-                    listFiles.Add(messageCheckRequest.data[index].ToString());
-            }
-
             DirectoryInfo di = Directory.CreateDirectory(path);
 
-            Parallel.For(0, listFiles.Count, i =>
+            Parallel.For(0, messageCheckRequest.data.Length, index =>
             {
-                using (System.IO.StreamWriter file = new System.IO.StreamWriter(path + listNames.ElementAt(i) + ".txt", true))
+                using (System.IO.StreamWriter file = new System.IO.StreamWriter(path + messageCheckRequest.data[index] + ".txt", true))
                 {
-                    file.WriteLine(listFiles.ElementAt(i));
+                    file.WriteLine("The content of the file has been deciphered using the followinf key : " + messageCheckRequest.data[index+2]);
+                    file.WriteLine(messageCheckRequest.data[index+1]);
                 }
+                Interlocked.Add(ref index, 3);
             });
 
             MessageBox.Show("Download finished ");
