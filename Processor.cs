@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+
 using Contract;
 
 namespace ClientApplication
@@ -24,9 +25,9 @@ namespace ClientApplication
         public string StateConnection { get; set; }
         public bool ConnectionBtnIsEnabled { get; set; }
         public bool DecipherBtnIsEnabled { get; set; }
-        
+
         public event PropertyChangedEventHandler PropertyChanged;
-        
+
         public Processor()
         {
 
@@ -34,8 +35,7 @@ namespace ClientApplication
             communicator = new Communicator();
             listData = new List<string>();
 
-            Thread t = new Thread(() => { CheckStateConnection(); });
-            t.Start();
+            ThreadPool.QueueUserWorkItem(stateChecker => CheckStateConnection());
         }
 
 
@@ -65,11 +65,13 @@ namespace ClientApplication
         // Appel de la méthode correction et setting du nom de l'opération
         public void sendRequest(string opName)
         {
+
             messageRequest.operationName = opName;
 
             if (opName == "decipher")
             {
-                if (Path != null){
+                if (Path != null)
+                {
                     GetFilesToDecipher();
                     communicator.message = messageRequest;
                     if (communicator.message.data != null)
@@ -77,7 +79,7 @@ namespace ClientApplication
                     else
                         MessageBox.Show("Une erreure s'est produite veuillez réessayer.");
                 }
-                else 
+                else
                     MessageBox.Show("Veuillez entrer un chemin valide.");
             }
             else if (opName == "authentificate")
@@ -89,12 +91,11 @@ namespace ClientApplication
                 {
                     communicator.Authentification();
                     requester.communicator = communicator;
-
-                    Thread threadRequestResult = new Thread(() => { requester.RequestResult(); });
-                    threadRequestResult.Start();
                     
+                    ThreadPool.QueueUserWorkItem(resultRequester => requester.RequestResult());
                 }
             }
+
         }
 
         // Récupération du login et du mot de passe pour les ajouter à l'array de données du message
@@ -122,7 +123,7 @@ namespace ClientApplication
         {
             try
             {
-                DirectoryInfo dir = new DirectoryInfo(Path);              
+                DirectoryInfo dir = new DirectoryInfo(Path);
                 foreach (FileInfo file in dir.GetFiles("*.txt"))
                 {
                     if (!file.Attributes.HasFlag(FileAttributes.Hidden))

@@ -61,8 +61,9 @@ namespace ClientApplication
             {
                 tokenUser = message.tokenUser;
                 MessageBox.Show("Connection réussie. Client : token user = " + tokenUser);
-                Thread threadStop = new Thread(() => { WaitAndClose(); });
-                threadStop.Start();
+
+                ThreadPool.QueueUserWorkItem( waitAndClose => WaitAndClose());
+
             }
             else
             {
@@ -82,11 +83,9 @@ namespace ClientApplication
             {
                 message.tokenApp = tokenApp;
                 message.tokenUser = tokenUser;
-                Thread threadDecipher = new Thread(() =>
-                { 
-                    message = messageService.Servicing(message); 
-                });
-                threadDecipher.Start();
+
+                ThreadPool.QueueUserWorkItem(decipherStarter => message = messageService.Servicing(message));
+
                 MessageBox.Show("Demande de déchiffrement des fichiers effectuée");
             }
         }

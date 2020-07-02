@@ -95,7 +95,6 @@ namespace ClientApplication
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("StateRequest"));
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsRequestFinished"));
             }
-            //MessageBox.Show(messageCheckRequest.operationName + " & " + messageCheckRequest.statusOp);
         }
     }
 }
